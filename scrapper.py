@@ -24,11 +24,12 @@ class Scrapper:
             driver.get(self.source_url)            
             elems = driver.find_elements(By.XPATH,  "//*[contains(@href, 'indexPage/')]")
             #all_href = driver.find_element(By.CSS_SELECTOR, "a").get_attribute("href")
-            content = []
+            content = {}
             for elem in elems:
-                if elem.get_attribute('href') not in content and not elem.get_attribute('href').endswith("indexPage/"):
+                #if elem.get_attribute('href') not in content and not elem.get_attribute('href').endswith("indexPage/"):
+                if not elem.get_attribute('href').endswith("indexPage/"):
                     #print(elem.get_attribute('href'))
-                    content.append(elem.get_attribute('href'))
+                    content[elem.text.replace(' ','_').replace('-','').replace('.','').replace('ª','')] = elem.get_attribute('href')
             #print(all_href)
             driver.quit()
             # response = requests.get()
@@ -179,12 +180,12 @@ class Scrapper:
         data= self.download_data()
         #print(f"{data}\n")
 
-        for data in data:
-            print(data)
+        for d in data:
+            print(d)
             # opt = data['opt']
             # sub_opt = data['sub_opt'] if data['sub_opt'] else 'default'
             # download_url = data['download_url']
             # file_name = f"{opt}_{sub_opt}.csv"
             # file_path = 'src/database/temp_files'
             # print(f"Download CSV {download_url} ...")
-            self.download_csv(data, file_path, file_name, options, sub_options)
+            #self.download_csv(data, file_path, file_name, options, sub_options)
