@@ -120,8 +120,9 @@ class Scrapper:
 
             # WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="acceptCookieButton"]'))).click()
 
-            # pagination_list = WebDriverWait(driver, 20).until(EC.presence_of_element_located(driver.find_element(By.XPATH, "/html/body/app-root/app-theoretical-portfolio/div/div/div/form/div[2]/div/div[0]/div[1]/nav/pagination-controls/pagination-template/ul")))
-            pagination_list = WebDriverWait(driver, 20).until(EC.presence_of_element_located(driver.find_element(By.XPATH, "/html/body/app-root")))
+            # pagination_list = WebDriverWait(driver, 20).until(EC.presence_of_element_located(driver.find_element(By.XPATH, "/html/body/app-root/app-theorical-portfolio
+            # /div/div/div/form/div[2]/div/div[0]/div[1]/nav/pagination-controls/pagination-template/ul")))
+            pagination_list = driver.find_element(By.XPATH, "/html/body/app-root/app-theorical-portfolio/div/div/div/form")
             # teste=WebDriverWait(driver, 20).until(EC.visibility_of_element_located(driver.find_element(By.CSS_SELECTOR, "ngx-pagination")))
             # print(teste)
             # pagination_list = WebDriverWait(driver, 20).until(EC.element_to_be_clickable(By.CSS_SELECTOR, "ngx-pagination"))
