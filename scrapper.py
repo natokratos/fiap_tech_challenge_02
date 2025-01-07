@@ -269,6 +269,76 @@ class Scrapper:
         
     #     return result
 
+    def download_data2(self, url):
+        try:
+            if "Linux" in platform.system():
+                service = Service(executable_path="./geckodriver-linux")
+            elif "Windows" in platform.system():
+                service = Service(executable_path="./geckodriver.exe")
+            else:
+                service = Service(executable_path="./geckodriver")
+
+            options = Options()
+            # options.headless = True
+            options.add_argument("--headless")
+            #options.add_argument(r"--binary_location C:\Users\darkt\Apps\FirefoxPortable\App\Firefox64")
+            # options.add_argument('--binary_location /usr/bin/firefox')
+            # options.binary_location=r"/usr/bin/firefox"
+            options.set_preference("browser.download.folderList", 2)
+            options.set_preference("browser.download.manager.showWhenStarting", False)
+            options.set_preference("browser.download.dir", "./temp_files")
+            options.set_preference("browser.helperApps.neverAsk.saveToDisk", "text/csv")
+
+            driver = webdriver.Firefox(service=service, options=options)
+            driver.get(url) 
+
+            element = driver.find_element(By.XPATH, "//div[@class='content']//p[@class='primary-text']//a[contains(text(),'Download')]")
+wait.until(EC.invisibility_of_element_located((By.XPATH,
+              "//div[@class='blockUI blockOverlay']")))            
+            element = WebDriverWait(driver, 15).until(
+                EC.presence_of_element_located((By.XPATH, "//div[@class='content']//p[@class='primary-text']//a[contains(text(),'Download')]"))
+            )            
+            print(element)
+            #f = io.StringIO(element)
+            #content = content + pd.read_html(f)[0]            
+            #element = driver.find_element(By.LINK_TEXT, "Download")
+            driver.execute_script("arguments[0].scrollIntoView();", element)
+            #driver.execute_script("arguments[0].click();", element)
+            element.click()
+
+            #table = WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "table.table-responsive-sm"))).get_attribute("outerHTML")
+            #f = io.StringIO(table)
+            #content = pd.read_html(f)[0]
+            return content
+        except requests.RequestException as e:
+            #file_name = url.split("=")[-1]
+            file_name = url.split("/")[-1]
+            print(f"options[file_name] {options[file_name]}")
+            if options and not options[file_name]:
+                file_name = f"{options[file_name]}_default.csv"
+            elif sub_options and not sub_options[file_name]:
+                file_name = f"{sub_options[file_name]}.csv"
+            print(f"file_name {file_name}")
+            pattern = re.compile(f"{file_name}[^ ]+.csv")
+            found = False
+            #print(f"pattern {pattern}")
+            for fp in os.listdir("src/database/temp_files/"):
+                match = pattern.match(fp)
+                #print(f"fp {fp} match {match}")
+                if match:
+                    file_name = f"src/database/temp_files/{str(match.group(0))}"
+                    print(f"O CSV correspondente [{file_name}] existe, tamanho [{os.path.getsize(file_name)}]")
+                    #response = BeautifulSoup(open(file_name, "rb"), 'lxml')
+                    #response = open(file_name, "rb")
+                    #print(f"response {response}")
+                    #return response
+                    found = True
+                    #break
+            if not found:
+                print(f'\nURL [{url}] \nERRO: [{e}]\n')
+
+            return None
+
     def get_content(self, url):
         '''
         Realizar a requisição HTTP e retornar o conteúdo
@@ -308,7 +378,7 @@ class Scrapper:
         '''
 
         print(f"Baixando {download_url} {folder_path}/{file_name}")
-        content = self.download_data1(download_url)
+        content = self.download_data2(download_url)
 
         if content:
 
