@@ -13,7 +13,6 @@ def run():
 
     dest_files = scraper.run()
 
-    print(f"dest_files {dest_files}")
     for f in dest_files:
         if "Dia_" in f and ".parquet" not in f:
             aws_s3 = AwsS3()

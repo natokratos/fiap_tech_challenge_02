@@ -1,11 +1,17 @@
 import boto3
 from botocore.client import ClientError
 import pandas as pd
+import os
 
 class AwsS3:
 
     def __init__(self):
-        self.aws_endpoint = 'http://localhost:4566'
+        try:
+            if os.environ['AWS_ENDPOINT_URL']:
+                self.aws_endpoint = os.environ['AWS_ENDPOINT_URL']
+        except KeyError as e:
+            self.aws_endpoint = 'http://localhost:4566'
+        print(f"AWS_ENDPOINT_URL [ {self.aws_endpoint} ]")
         #self.source_url = 'https://sistemaswebb3-listados.b3.com.br/indexPage/day/IBOV?language=pt-br'
 
     def upload_file(self, bucket_name, file_name):
