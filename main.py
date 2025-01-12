@@ -1,6 +1,7 @@
 import os 
 
 from scrapper import Scrapper
+from aws_s3 import AwsS3
 
 def run():
 
@@ -10,7 +11,13 @@ def run():
     
     scraper = Scrapper()
 
-    scraper.run()
+    dest_files = scraper.run()
+
+    print(f"dest_files {dest_files}")
+    for f in dest_files:
+        if "Dia_" in f and ".parquet" not in f:
+            aws_s3 = AwsS3()
+            aws_s3.upload_file("dados-brutos", f)
 
 if __name__ == '__main__':
 

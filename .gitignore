@@ -162,3 +162,10 @@ cython_debug/
 #.idea/
 
 temp_files
+dind-var-lib-docker
+var-lib-docker
+logs
+cache
+.volume
+IBOV*
+!.devcontainer/.env

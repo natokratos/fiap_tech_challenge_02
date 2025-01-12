@@ -104,8 +104,12 @@ class Scrapper:
             src_files = glob.glob(f"{abs_folder}/downloaded/*") # * means all if need specific format then *.csv
             for files in src_files:
                 shutil.copy(files, "./temp_files/")
+                lines = open(files.replace("downloaded/",""), encoding="ISO-8859-1").readlines()
+                with open(files.replace("downloaded/",""), 'w') as f:
+                    f.writelines(lines[1:])
                 os.remove(files)
 
+            
             driver.quit()
             return src_files
         except Exception as e:
@@ -130,3 +134,7 @@ class Scrapper:
                 print(f"Download CSV [{d}] ...")
                 content = self.download_csv(data[d], file_path, file_name)
                 print(f"{content}\n")
+
+        dest_files = glob.glob(f"temp_files/*") # * means all if need specific format then *.csv
+
+        return dest_files
