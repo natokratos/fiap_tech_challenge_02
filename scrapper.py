@@ -10,6 +10,7 @@ import glob
 import shutil
 import platform 
 import time
+import datetime
 
 class Scrapper:
 
@@ -101,17 +102,22 @@ class Scrapper:
             driver.execute_script("arguments[0].click(); return true;", element)
             time.sleep(10)
 
-            src_files = glob.glob(f"{abs_folder}/downloaded/*") # * means all if need specific format then *.csv
+            now = datetime.datetime.now()
+            directory = f"{now.strftime(f'%Y%m%d')}/"
+            isExist = os.path.exists(f"{abs_folder}/{directory}")
+            if not isExist:
+                os.makedirs(f"{abs_folder}/{directory}")
+            src_files = glob.glob(f"{abs_folder}/downloaded/*")
             for files in src_files:
-                shutil.copy(files, "./temp_files/")
-                lines = open(files.replace("downloaded/",""), encoding="ISO-8859-1").readlines()
-                with open(files.replace("downloaded/",""), 'w') as f:
+                print(f"Movendo os arquivos de [{files}] para [{files.replace("downloaded/",f"{directory}")}] ...")
+                shutil.copy(files, f"./temp_files/{directory}")
+                lines = open(files.replace("downloaded/",f"{directory}"), encoding="ISO-8859-1").readlines()
+                with open(files.replace("downloaded/",f"{directory}"), 'w') as f:
                     f.writelines(lines[1:])
                 os.remove(files)
-
             
             driver.quit()
-            return src_files
+            return glob.glob(f"{abs_folder}/{directory}*")
         except Exception as e:
             print(f"Exception {repr(e)}")
             driver.quit()
@@ -124,6 +130,7 @@ class Scrapper:
 
 #https://sistemaswebb3-listados.b3.com.br/indexPage/theorical/IBOV?language=pt-br
 #https://sistemaswebb3-listados.b3.com.br/indexPage/day/IBOV?language=pt-br
+        content = ""
         for d in data:
             if d != "Download":
                 print(f"[{d}] [{data[d]}]")
@@ -133,8 +140,9 @@ class Scrapper:
                 file_path = './temp_files'
                 print(f"Download CSV [{d}] ...")
                 content = self.download_csv(data[d], file_path, file_name)
-                print(f"{content}\n")
 
-        dest_files = glob.glob(f"temp_files/*") # * means all if need specific format then *.csv
+        print(f"{content}\n")
 
-        return dest_files
+        #dest_files = glob.glob(f"temp_files/*") # * means all if need specific format then *.csv
+
+        return content

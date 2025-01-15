@@ -15,6 +15,7 @@ def run():
 
     for f in dest_files:
         if "Dia_" in f and ".parquet" not in f:
+            print("1111111111111")
             aws_s3 = AwsS3()
             aws_s3.upload_file("dados-brutos", f)
 
