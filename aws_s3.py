@@ -27,14 +27,7 @@ class AwsS3:
 
         try:
             df = pd.read_csv(file_name, encoding = "ISO-8859-1")
-            #now = datetime.datetime.now()
-            #directory = f"{now.strftime(f'%Y%m%d')}/"
-            # df['SETTLEMENTDATE'] = pd.to_datetime(df['SETTLEMENTDATE'])
-            # df['Date'] = df['SETTLEMENTDATE'].dt.date
-            #df['Date'] = directory
-            #df.to_parquet('nem.parquet',partition_cols=['Date'],allow_truncated_timestamps=True)            
             print(f"Convertendo o arquivo [{file_name}] para parquet...")
-            #parquet_file = file_name.replace(".csv", ".parquet").split("/")[-1]
             parquet_file = file_name.replace(".csv", ".parquet")
             df.to_parquet(parquet_file)
             print(f"Obtendo o conteudo do arquivo [{parquet_file}] ...")
