@@ -38,7 +38,7 @@ https://stackoverflow.com/questions/75688714/python-selenium-how-to-click-elemen
 https://stackoverflow.com/questions/30002313/finding-elements-by-class-name-with-selenium-in-python
 
 aws s3api create-bucket --bucket dados-brutos --endpoint=http://localhost:4566
-aws s3 ls --endpoint=localhost:4566
+aws s3 ls --endpoint=http://localhost:4566
 
 aws configure
 local | local
