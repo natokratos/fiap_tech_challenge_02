@@ -46,3 +46,4 @@ AWS Secret Access Key [None]: local
 Default region name [None]: us-east-1
 Default output format [None]: json
 
+docker logs -f localstack-main

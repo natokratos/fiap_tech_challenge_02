@@ -3,7 +3,19 @@ version: "3.8"
 services:
   localstack:
     container_name: "localstack-main"
-    image: localstack/localstack-pro:latest  # required for Pro
+    image: localstack/localstack:latest
+    # environment:
+    #   - SERVICES=s3,sqs,ses,secretsmanager,cloudwatch
+    #   - DEFAULT_REGION=sa-east-1
+    #   - AWS_DEFAULT_REGION=sa-east-1
+    #   - DEBUG=1
+    #   - DATA_DIR=/tmp/localstack/data
+    #   - SKIP_SSL_CERT_DOWNLOAD=1
+    #   - AWS_ACCESS_KEY_ID=admin
+    #   - AWS_SECRET_ACCESS_KEY=admin
+    #   - AWS_REGION=sa-east-1
+    #   - SQS_ENDPOINT_STRATEGY=off
+    #   - LOCALSTACK_HOST=${AWS_URL:-localhost}    
     ports:
       - "127.0.0.1:4566:4566"            # LocalStack Gateway
       - "127.0.0.1:4510-4559:4510-4559"  # external services port range

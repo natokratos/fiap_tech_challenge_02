@@ -8,18 +8,18 @@
      "LOCALSTACK_AUTH_TOKEN": "${localEnv:LOCALSTACK_AUTH_TOKEN}",  // required for Pro, not processed via template due to security reasons
      "LOCALSTACK_API_KEY": "${localEnv:LOCALSTACK_API_KEY}",
      // LocalStack configuration: https://docs.localstack.cloud/references/configuration/
-     "ACTIVATE_PRO": false,
-     "DEBUG": true,
-     "LS_LOG": "debug",
-     "PERSISTENCE": false,
+     "ACTIVATE_PRO": "false",
+     "DEBUG": "1",
+     "LS_LOG": "trace",
+     "PERSISTENCE": "false",
      "AUTO_LOAD_POD": " ",
-     "ENFORCE_IAM": false,
+     "ENFORCE_IAM": "false",
      "AWS_ACCESS_KEY_ID": "${localEnv:AWS_ACCESS_KEY_ID:local}",
      "AWS_SECRET_ACCESS_KEY":  "${localEnv:AWS_SECRET_ACCESS_KEY:local}",
      "AWS_ENDPOINT_URL": "http://localhost.localstack.cloud:4566",
      "AWS_REGION": "us-east-1",
      "AWS_DEFAULT_REGION": "us-east-1",
-     "IMAGE_NAME": "localstack/localstack-pro:latest",
+     "IMAGE_NAME": "localstack/localstack:latest",
      "LOCALSTACK_VOLUME_DIR": "/data"
     },
    
