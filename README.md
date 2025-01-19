@@ -41,9 +41,8 @@ aws s3api create-bucket --bucket dados-brutos --endpoint=http://localhost:4566
 aws s3 ls --endpoint=localhost:4566
 
 aws configure
-AWS Access Key ID [None]: local
-AWS Secret Access Key [None]: local
-Default region name [None]: us-east-1
-Default output format [None]: json
+local | local
+us-east-1
+json
 
 docker logs -f localstack-main
