@@ -23,6 +23,8 @@ class Scrapper:
         Realizar a requisição HTTP e retornar o conteúdo
         '''
 
+        print(f"Plataforma [{platform.system()}] ...")
+
         if "Linux" in platform.system():
             service = Service(executable_path="./geckodriver-linux")
         elif "Windows" in platform.system():
@@ -54,6 +56,7 @@ class Scrapper:
         Realizar o download e escrita do CSV
         '''
 
+        print(f"Plataforma [{platform.system()}] ...")
         print(f"Baixando [{download_url}] ...")
 
         if "Linux" in platform.system():
